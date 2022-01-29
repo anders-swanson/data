@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Convert HEVC encoded video to MP4 using ffmpeg
+
+FILES="$(find "$1" -maxdepth 1 -type f |egrep '.*(mov|MOV)$')"
+for file in $FILES; do
+  output_file="./data/$(basename $(echo "${file%.*}").mp4)"
+  echo "Converting... $file --> $output_file"
+  ffmpeg -i $file -qscale 1 -c:v libx264 -c:a copy $output_file
+done
+
